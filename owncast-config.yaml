@@ -1,0 +1,84 @@
+# OwnCast Configuration for PlayazKlub PPV Integration
+# Place this in your OwnCast directory as config.yaml
+
+# Basic Server Configuration
+webServerPort: 8080
+webServerIP: "0.0.0.0"
+
+# RTMP Configuration
+rtmp:
+  port: 1935
+
+# Video Configuration
+videoSettings:
+  chunkLengthInSeconds: 4
+  streamingKey: "YOUR_STREAM_KEY_HERE"
+  streamQualities:
+    - name: "720p"
+      videoBitrate: 2500
+      audioBitrate: 128
+      scaledWidth: 1280
+      scaledHeight: 720
+      framerate: 30
+    - name: "480p"
+      videoBitrate: 1200
+      audioBitrate: 128
+      scaledWidth: 854
+      scaledHeight: 480
+      framerate: 30
+
+# External Authentication for PPV
+auth:
+  indieAuthEnabled: false
+  externalAuth:
+    enabled: true
+    authEndpoint: "https://your-playazklub-domain.com/api/owncast/auth"
+    userInfoEndpoint: "https://your-playazklub-domain.com/api/owncast/user"
+
+# Admin Configuration
+adminPassword: "YOUR_SECURE_ADMIN_PASSWORD"
+
+# Instance Details
+instanceDetails:
+  name: "PlayazKlub Live"
+  title: "PlayazKlub Exclusive Live Events"
+  summary: "Premium live streaming events for PlayazKlub members"
+  logo: "https://your-playazklub-domain.com/images/branding/logo-primary.svg"
+  tags:
+    - "PlayazKlub"
+    - "Live Events"
+    - "Premium Content"
+  socialHandles:
+    - platform: "twitter"
+      url: "https://twitter.com/playazklub"
+
+# Chat Configuration
+chat:
+  enabled: true
+  requireDisplayName: true
+  allowGuestUsersToChat: false # Only authenticated users can chat
+
+# Storage Configuration
+storage:
+  enabled: true
+  endpoint: "your-s3-endpoint"
+  accessKey: "YOUR_S3_ACCESS_KEY"
+  secret: "YOUR_S3_SECRET"
+  bucket: "playazklub-streams"
+  region: "us-east-1"
+  pathPrefix: "live-streams"
+
+# Notifications
+notifications:
+  discord:
+    enabled: false
+  browser:
+    enabled: true
+
+# Analytics
+analytics:
+  ga_tracking_id: "YOUR_GA_TRACKING_ID"
+
+# Federation (ActivityPub)
+federation:
+  enabled: false

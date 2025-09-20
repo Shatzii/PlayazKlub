@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+  /* Brand Colors - 24k Gold */
+  --brand-gold: #FFD700;
+  --brand-gold-light: #FFC107;
+  --brand-gold-dark: #B8860B;
+  --brand-black: #000000;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Custom PlayazKlub Black & Gold brand styles */
+.playaz-gradient {
+  background: linear-gradient(90deg, var(--brand-gold) 0%, var(--brand-amber) 50%, var(--brand-orange) 100%);
+}
+
+.playaz-glow {
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+}
+
+/* Loading animations with brand colors */
+@keyframes playaz-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.playaz-pulse {
+  animation: playaz-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
