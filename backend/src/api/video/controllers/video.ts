@@ -18,26 +18,14 @@ export default factories.createCoreController('api::video.video', ({ strapi }) =
       // Upload files to Strapi media library
       const uploadedVideo = await strapi.plugins.upload.services.upload.upload({
         data: {},
-        files: {
-          file: videoFile,
-          path: videoFile.path,
-          name: videoFile.name,
-          type: videoFile.type,
-          size: videoFile.size,
-        },
+        files: videoFile,
       });
 
       let uploadedThumbnail = null;
       if (thumbnail) {
         uploadedThumbnail = await strapi.plugins.upload.services.upload.upload({
           data: {},
-          files: {
-            file: thumbnail,
-            path: thumbnail.path,
-            name: thumbnail.name,
-            type: thumbnail.type,
-            size: thumbnail.size,
-          },
+          files: thumbnail,
         });
       }
 
@@ -51,6 +39,7 @@ export default factories.createCoreController('api::video.video', ({ strapi }) =
           isPublic: isPublic !== undefined ? isPublic : true,
           tags: tags ? JSON.parse(tags) : null,
           uploadDate: new Date(),
+          views: 0,
         },
         populate: ['videoFile', 'thumbnail'],
       });
