@@ -373,6 +373,64 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiEventEvent extends Struct.CollectionTypeSchema {
+  collectionName: 'events';
+  info: {
+    description: 'Live streaming events with PPV capabilities';
+    displayName: 'Event';
+    pluralName: 'events';
+    singularName: 'event';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    category: Schema.Attribute.Enumeration<
+      ['podcast', 'interview', 'live-show', 'special-event', 'workshop']
+    > &
+      Schema.Attribute.DefaultTo<'live-show'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.RichText;
+    duration: Schema.Attribute.Integer;
+    eventDate: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    featuredImage: Schema.Attribute.Media<'images'>;
+    isLive: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    isPPV: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::event.event'> &
+      Schema.Attribute.Private;
+    maxViewers: Schema.Attribute.Integer;
+    ownCastStreamId: Schema.Attribute.String;
+    ownCastStreamKey: Schema.Attribute.String & Schema.Attribute.Private;
+    price: Schema.Attribute.Decimal;
+    publishedAt: Schema.Attribute.DateTime;
+    recordingAvailable: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    shortDescription: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 500;
+      }>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    streamStatus: Schema.Attribute.Enumeration<
+      ['scheduled', 'live', 'ended', 'cancelled']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'scheduled'>;
+    stripePriceId: Schema.Attribute.String;
+    tags: Schema.Attribute.JSON;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 255;
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiPodcastPodcast extends Struct.CollectionTypeSchema {
   collectionName: 'podcasts';
   info: {
@@ -403,6 +461,51 @@ export interface ApiPodcastPodcast extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPpvPurchasePpvPurchase extends Struct.CollectionTypeSchema {
+  collectionName: 'ppv_purchases';
+  info: {
+    description: 'Pay-per-view event purchases';
+    displayName: 'PPV Purchase';
+    pluralName: 'ppv-purchases';
+    singularName: 'ppv-purchase';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    accessGrantedAt: Schema.Attribute.DateTime;
+    amount: Schema.Attribute.Decimal;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    currency: Schema.Attribute.String & Schema.Attribute.DefaultTo<'usd'>;
+    eventId: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::ppv-purchase.ppv-purchase'
+    > &
+      Schema.Attribute.Private;
+    metadata: Schema.Attribute.JSON;
+    publishedAt: Schema.Attribute.DateTime;
+    purchaseDate: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    refundedAt: Schema.Attribute.DateTime;
+    status: Schema.Attribute.Enumeration<
+      ['pending', 'completed', 'failed', 'refunded']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'pending'>;
+    stripePaymentIntentId: Schema.Attribute.String;
+    stripeSessionId: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    userEmail: Schema.Attribute.Email & Schema.Attribute.Required;
   };
 }
 
@@ -915,7 +1018,9 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::event.event': ApiEventEvent;
       'api::podcast.podcast': ApiPodcastPodcast;
+      'api::ppv-purchase.ppv-purchase': ApiPpvPurchasePpvPurchase;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
