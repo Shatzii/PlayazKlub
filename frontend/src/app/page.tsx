@@ -40,6 +40,12 @@ export default async function Home() {
                 Explore Podcasts
               </Link>
               <Link
+                href="/studio"
+                className="bg-gradient-to-r from-gray-700 to-gray-600 hover:from-gray-600 hover:to-gray-500 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+              >
+                🎬 Creator Studio
+              </Link>
+              <Link
                 href="#membership"
                 className="border-2 border-yellow-400/50 hover:border-yellow-400 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 hover:bg-yellow-400/10"
               >
@@ -143,6 +149,12 @@ export default async function Home() {
             <div className="flex justify-center space-x-6">
               <Link href="/podcasts" className="text-gray-400 hover:text-white transition-colors">
                 Podcasts
+              </Link>
+              <Link href="/events" className="text-gray-400 hover:text-white transition-colors">
+                Live Events
+              </Link>
+              <Link href="/studio" className="text-gray-400 hover:text-white transition-colors">
+                Studio
               </Link>
               <Link href="#membership" className="text-gray-400 hover:text-white transition-colors">
                 Membership

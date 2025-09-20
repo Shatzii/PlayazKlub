@@ -4,4 +4,6 @@ export default {
     maxLimit: 100,
     withCount: true,
   },
+  // Allow public access to APIs
+  publicPermissions: ['*'],
 };

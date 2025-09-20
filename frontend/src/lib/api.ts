@@ -1,6 +1,6 @@
 const STRAPI_URL = process.env.NODE_ENV === 'production'
   ? 'https://your-production-strapi-url.com'
-  : 'http://localhost:1337';
+  : 'http://localhost:1337'; // Use Strapi backend
 
 export interface Podcast {
   id: number;
