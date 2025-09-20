@@ -4,4 +4,10 @@ export default ({ env }) => ({
   app: {
     keys: env.array('APP_KEYS'),
   },
+  settings: {
+    cors: {
+      enabled: true,
+      origin: ['http://localhost:3000', 'http://localhost:3001'],
+    },
+  },
 });

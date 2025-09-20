@@ -2,20 +2,32 @@ export default {
   routes: [
     {
       method: 'GET',
-      path: '/podcasts',
+      path: 'podcasts',
       handler: 'podcast.find',
       config: {
         policies: [],
         middlewares: [],
+        auth: false,
       },
     },
     {
       method: 'GET',
-      path: '/podcasts/:id',
+      path: 'test-podcasts',
+      handler: 'podcast.test',
+      config: {
+        policies: [],
+        middlewares: [],
+        auth: false,
+      },
+    },
+    {
+      method: 'GET',
+      path: 'podcasts/:id',
       handler: 'podcast.findOne',
       config: {
         policies: [],
         middlewares: [],
+        auth: false,
       },
     },
     {
@@ -23,7 +35,7 @@ export default {
       path: '/podcasts',
       handler: 'podcast.create',
       config: {
-        policies: [],
+        policies: ['global::is-authenticated'],
         middlewares: [],
       },
     },
@@ -41,7 +53,7 @@ export default {
       path: '/podcasts/:id',
       handler: 'podcast.delete',
       config: {
-        policies: [],
+        policies: ['global::is-authenticated'],
         middlewares: [],
       },
     },

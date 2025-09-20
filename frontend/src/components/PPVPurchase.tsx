@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useSession } from 'next-auth/react';
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 interface PPVPurchaseProps {
   eventId: string;
@@ -22,14 +22,14 @@ export default function PPVPurchase({
   streamStatus,
   className = ''
 }: PPVPurchaseProps) {
-  const { data: session, status } = useSession();
+  const { user, isLoading: userLoading } = useUser();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handlePurchase = async () => {
-    if (status !== 'authenticated') {
+    if (!user) {
       // Redirect to login
-      window.location.href = '/api/auth/signin';
+      window.location.href = '/api/auth/login';
       return;
     }
 
@@ -169,7 +169,7 @@ export default function PPVPurchase({
             {getButtonText()}
           </button>
 
-          {status !== 'authenticated' && (
+          {!user && (
             <p className="text-gray-400 text-xs">
               Sign in required to purchase access
             </p>

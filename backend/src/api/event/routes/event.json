@@ -5,7 +5,8 @@
       "path": "/events",
       "handler": "event.find",
       "config": {
-        "policies": []
+        "policies": [],
+        "auth": false
       }
     },
     {
@@ -13,7 +14,8 @@
       "path": "/events/:id",
       "handler": "event.findOne",
       "config": {
-        "policies": []
+        "policies": [],
+        "auth": false
       }
     },
     {
@@ -21,7 +23,7 @@
       "path": "/events/:id/check-access",
       "handler": "event.checkAccess",
       "config": {
-        "policies": ["global::is-authenticated"]
+        "policies": []
       }
     },
     {
@@ -29,7 +31,7 @@
       "path": "/events/:id/stream-url",
       "handler": "event.getStreamUrl",
       "config": {
-        "policies": ["global::is-authenticated"]
+        "policies": []
       }
     }
   ]

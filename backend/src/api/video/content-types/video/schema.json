@@ -1,0 +1,61 @@
+{
+  "kind": "collectionType",
+  "collectionName": "videos",
+  "info": {
+    "singularName": "video",
+    "pluralName": "videos",
+    "displayName": "Video",
+    "description": "User uploaded videos"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "maxLength": 255
+    },
+    "description": {
+      "type": "richtext",
+      "required": false
+    },
+    "videoFile": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["videos"]
+    },
+    "thumbnail": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "duration": {
+      "type": "integer",
+      "required": false,
+      "description": "Duration in seconds"
+    },
+    "uploadDate": {
+      "type": "datetime",
+      "required": true,
+      "default": "now"
+    },
+    "isPublic": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "views": {
+      "type": "integer",
+      "default": 0,
+      "required": true
+    },
+    "tags": {
+      "type": "json",
+      "description": "Video tags for categorization"
+    }
+  }
+}

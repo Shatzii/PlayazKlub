@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/ppv-purchases",
+      "handler": "ppv-purchase.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/ppv-purchases",
+      "handler": "ppv-purchase.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/ppv-purchases/:id",
+      "handler": "ppv-purchase.update",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

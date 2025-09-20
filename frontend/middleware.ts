@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // Define protected routes that require authentication
-const protectedRoutes = ['/portal', '/admin'];
-const authRoutes = ['/api/auth', '/login'];
+const protectedRoutes = ['/portal'];
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -12,25 +11,14 @@ export function middleware(request: NextRequest) {
     pathname.startsWith(route)
   );
 
-  // Check if it's an auth route
-  const isAuthRoute = authRoutes.some(route => 
-    pathname.startsWith(route)
-  );
-
-  // Get authentication status from session (simplified check)
-  const authToken = request.cookies.get('next-auth.session-token') || 
-                   request.cookies.get('__Secure-next-auth.session-token');
+  // For Auth0, check for user session cookie
+  const authCookie = request.cookies.get('appSession');
 
   // Redirect to login if accessing protected route without auth
-  if (isProtectedRoute && !authToken) {
-    const loginUrl = new URL('/api/auth/signin', request.url);
-    loginUrl.searchParams.set('callbackUrl', pathname);
+  if (isProtectedRoute && !authCookie) {
+    const loginUrl = new URL('/api/auth/login', request.url);
+    loginUrl.searchParams.set('returnTo', pathname);
     return NextResponse.redirect(loginUrl);
-  }
-
-  // Redirect authenticated users away from auth pages
-  if (isAuthRoute && authToken && pathname !== '/api/auth/signout') {
-    return NextResponse.redirect(new URL('/portal', request.url));
   }
 
   // Add security headers
